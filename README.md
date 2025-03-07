@@ -110,7 +110,7 @@ Checks if replication is working properly by querying both servers.
 ### `connect_primary.sh`
 Automatically connects to whichever node is currently acting as primary.
 
-### `logs.sh`
+### `check_logs.sh`
 Shows the most recent logs from both primary and standby servers.
 
 ## Testing Replication
@@ -121,9 +121,8 @@ Shows the most recent logs from both primary and standby servers.
    ```
 
 2. Create a test table and insert data:
-   ```sql
-   CREATE TABLE test (id SERIAL PRIMARY KEY, data TEXT);
-   INSERT INTO test (data) VALUES ('test data');
+   ```bash
+  ./scripts/test_replication.sh
    ```
 
 3. Connect to the standby server to verify the data is replicated:
@@ -133,7 +132,7 @@ Shows the most recent logs from both primary and standby servers.
 
 4. Query the test table:
    ```sql
-   SELECT * FROM test;
+   SELECT * FROM test_replication;
    ```
 
 ## Failover (Manual)
