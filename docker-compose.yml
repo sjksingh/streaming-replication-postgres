@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  postgres-primary:
+    image: postgres:15
+    container_name: postgres-primary
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: primary
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_primary:/var/lib/postgresql/data
+      - ./init-primary.sh:/docker-entrypoint-initdb.d/init-primary.sh
+    networks:
+      - postgres_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  postgres-standby:
+    image: postgres:15
+    container_name: postgres-standby
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: standby
+      PGPASSWORD: replica_pass
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_standby:/var/lib/postgresql/data
+      - ./standby-entrypoint.sh:/standby-entrypoint.sh
+    entrypoint: ["/standby-entrypoint.sh"]
+    networks:
+      - postgres_net
+
+volumes:
+  pg_primary:
+  pg_standby:
+
+networks:
+  postgres_net:
