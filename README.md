@@ -185,11 +185,3 @@ If replication is not working:
    ```
    docker exec -it postgres-standby cat /var/lib/postgresql/data/postgresql.auto.conf
    ```
-
-## License
-
-[MIT or your preferred license]
-
-## Contributing
-
-Contributions welcome! Please feel free to submit a Pull Request.
