@@ -53,7 +53,7 @@ This project sets up a PostgreSQL streaming replication environment using Docker
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/streaming-replication-postgres.git
+   git clone https://github.com/sjksingh/streaming-replication-postgres.git
    cd streaming-replication-postgres
    ```
 
